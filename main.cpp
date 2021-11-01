@@ -33,7 +33,6 @@ int main(int argc, char **argv)
         return CURLE_OUT_OF_MEMORY;
     }
 
-    curl_easy_reset(handle);
     curl_easy_setopt(handle, CURLOPT_URL, "ftp://127.0.0.1/lamp_sample/");
     curl_easy_setopt(handle, CURLOPT_USERNAME, "user");
     curl_easy_setopt(handle, CURLOPT_PASSWORD, "12345");
@@ -48,7 +47,7 @@ int main(int argc, char **argv)
     curl_easy_setopt(handle, CURLOPT_NOPROXY, "*");
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_callback);
 
-    curl_easy_perform(handle);
+    rc = curl_easy_perform(handle);
 
     curl_easy_cleanup(handle);
     return 0;
