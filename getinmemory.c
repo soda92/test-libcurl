@@ -75,7 +75,7 @@ int main(void)
     curl_handle = curl_easy_init();
 
     /* specify URL to get */
-    curl_easy_setopt(curl_handle, CURLOPT_URL, "ftp://127.0.0.1:2121/");
+    curl_easy_setopt(curl_handle, CURLOPT_URL, "ftp://127.0.0.1/");
     curl_easy_setopt(curl_handle, CURLOPT_USERNAME, "user");
     curl_easy_setopt(curl_handle, CURLOPT_PASSWORD, "12345");
 
@@ -88,12 +88,13 @@ int main(void)
     /* some servers don't like requests that are made without a user-agent
      field, so we provide one */
     // curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-    // curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 1L);
+    curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 1L);
     /* get it! */
-    res = curl_easy_perform(curl_handle);
+    curl_easy_setopt(curl_handle, CURLOPT_NOPROXY, "*");
     curl_easy_setopt(curl_handle, CURLOPT_DIRLISTONLY, 1L);
     curl_easy_setopt(curl_handle, CURLOPT_CUSTOMREQUEST, "NLST");
 
+    res = curl_easy_perform(curl_handle);
     /* check for errors */
     if (res != CURLE_OK)
     {
